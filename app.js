@@ -2,9 +2,11 @@ const express = require('express');
 const mysql = require('mysql');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors());
 
 // Create a connection to the MySQL database
 const connection = mysql.createConnection({
@@ -27,7 +29,7 @@ connection.connect((err) => {
 
 // 1. GET all active fundraisers (for the Home page)
 app.get('/api/fundraisers', (req, res) => {
-    const query = 'SELECT * FROM FUNDRAISER WHERE active = 1';
+    const query = 'SELECT * FROM FUNDRAISER WHERE ACTIVE = 1';
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error fetching data: ', err);
@@ -51,11 +53,11 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
-// 3. GET active fundraisers based on search criteria
+// 3. GET active fundraisers based on search criteria (organizer or city)
 app.get('/api/fundraisers/search', (req, res) => {
     const searchTerm = req.query.query;
-    const query = 'SELECT * FROM FUNDRAISER WHERE active = 1 AND title LIKE ?';
-    connection.query(query, [`%${searchTerm}%`], (err, results) => {
+    const query = 'SELECT * FROM FUNDRAISER WHERE ACTIVE = 1 AND (ORGANIZER LIKE ? OR CITY LIKE ?)';
+    connection.query(query, [`%${searchTerm}%`, `%${searchTerm}%`], (err, results) => {
         if (err) {
             console.error('Error fetching data: ', err);
             res.status(500).send('Server error');
@@ -68,7 +70,7 @@ app.get('/api/fundraisers/search', (req, res) => {
 // 4. GET fundraiser details by ID (for the Fundraiser page)
 app.get('/api/fundraisers/:id', (req, res) => {
     const fundraiserId = req.params.id;
-    const query = 'SELECT * FROM FUNDRAISER WHERE id = ?';
+    const query = 'SELECT * FROM FUNDRAISER WHERE FUNDRAISER_ID = ?';
     connection.query(query, [fundraiserId], (err, results) => {
         if (err) {
             console.error('Error fetching data: ', err);
