@@ -1,16 +1,17 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+require('dotenv').config();
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // Create a connection to the MySQL database
 const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'crowdfunding_db_user',
-    password: 'crowdfundingDB@123',
-    database: 'crowdfunding_db'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 // Connect to the database
