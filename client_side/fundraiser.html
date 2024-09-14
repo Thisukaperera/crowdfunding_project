@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundraiser Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Fundraiser Details</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html">Search Fundraisers</a>
+        </nav>
+    </header>
+
+    <section>
+        <div id="fundraiser-details"></div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get fundraiser ID from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const fundraiserId = urlParams.get('id');
+            
+            // Fetch the fundraiser details using the ID
+            fetch(`http://localhost:5000/api/fundraisers/${fundraiserId}`)
+                .then(response => response.json())
+                .then(fundraiser => {
+                    const detailsDiv = document.getElementById('fundraiser-details');
+                    
+                    if (fundraiser) {
+                        // Create HTML structure for fundraiser details
+                        detailsDiv.innerHTML = `
+                            <h2>${fundraiser.ORGANIZER} - ${fundraiser.CAPTION}</h2>
+                            <p><strong>City:</strong> ${fundraiser.CITY}</p>
+                            <p><strong>Target Funding:</strong> $${fundraiser.TARGET_FUNDING.toFixed(2)}</p>
+                            <p><strong>Current Funding:</strong> $${fundraiser.CURRENT_FUNDING.toFixed(2)}</p>
+                            <p><strong>Status:</strong> ${fundraiser.ACTIVE === 1 ? 'Active' : 'Inactive'}</p>
+                            <p><strong>Category ID:</strong> ${fundraiser.CATEGORY_ID}</p>
+                            <button id="donate-btn">Donate</button>
+                        `;
+                    } else {
+                        // If fundraiser not found
+                        detailsDiv.innerHTML = '<p>Fundraiser not found</p>';
+                    }
+
+                    // Add click event for "Donate" button
+                    const donateBtn = document.getElementById('donate-btn');
+                    if (donateBtn) {
+                        donateBtn.addEventListener('click', function() {
+                            alert('This feature is under construction.');
+                        });
+                    }
+                })
+                .catch(err => console.error('Error fetching fundraiser details:', err));
+        });
+    </script>
+</body>
+</html>

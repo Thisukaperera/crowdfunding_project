@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Crowdfunding Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Crowdfunding Platform</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html">Search Fundraisers</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Active Fundraisers</h2>
+        <div id="fundraiser-list"></div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:5000/api/fundraisers')
+                .then(response => response.json())
+                .then(data => {
+                    const fundraiserList = document.getElementById('fundraiser-list');
+                    data.forEach(fundraiser => {
+                        const isActive = fundraiser.active === 1 ? 'Active' : 'Inactive';
+                        const fundraiserDiv = document.createElement('div');
+                        fundraiserDiv.innerHTML = `
+                            <h3>${fundraiser.ORGANIZER} - ${fundraiser.CAPTION}</h3>
+                            <p>Target: $${fundraiser.TARGET_FUNDING.toFixed(2)}, Current: $${fundraiser.CURRENT_FUNDING.toFixed(2)}</p>
+                            <p>City: ${fundraiser.CITY}</p>
+                            <p>Status: ${isActive}</p>
+                            <a href="fundraiser.html?id=${fundraiser.FUNDRAISER_ID}">View Details</a>
+                        `;
+                        fundraiserList.appendChild(fundraiserDiv);
+                    });
+                })
+                .catch(err => console.error('Error fetching fundraisers:', err));
+        });
+    </script>
+</body>
+</html>

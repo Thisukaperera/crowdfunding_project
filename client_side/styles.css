@@ -1,0 +1,105 @@
+/* General body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://img.paperform.co/fetch/f_jpg,w_1800/https://s3.amazonaws.com/paperform-blog/2020/09/How-To-Start-A-Fundraiser-Online-In-6-Simple-Steps.png'); /* Add your background image here */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+}
+
+/* Header styles */
+header {
+    background-color: rgba(0, 0, 0, 0.7); /* Make the header semi-transparent */
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: #fff;
+}
+
+/* Navigation styles */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ffd700; /* Gold color for hover effect */
+}
+
+/* Section styles */
+section {
+    background-color: rgba(0, 0, 0, 0.5); /* Add a transparent background */
+    padding: 40px;
+    margin: 30px auto;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 15px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ffd700; /* Gold color for headings */
+    margin-bottom: 20px;
+}
+
+/* Fundraiser/Search results cards */
+#fundraiser-list div, #search-results div {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent cards */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+#fundraiser-list div:hover, #search-results div:hover {
+    transform: translateY(-5px); /* Hover effect for cards */
+}
+
+/* Button styles */
+button {
+    background-color: #ff4500; /* Orange background for buttons */
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #ff6347; /* Lighter orange on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    section {
+        width: 95%;
+        padding: 20px;
+    }
+
+    nav a {
+        margin-right: 10px;
+        font-size: 1em;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+}
